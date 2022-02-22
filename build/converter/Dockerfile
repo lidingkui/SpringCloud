@@ -1,0 +1,11 @@
+FROM openjdk:8-jdk-slim
+VOLUME /tmp
+ADD converter-1.0-SNAPSHOT.jar app.jar
+RUN bash -c 'touch /app.jar'
+
+ENV PORT=8074
+EXPOSE $PORT
+
+ENV JAVA_OPTS="-XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -Xms75m -Xmx300m -Duser.timezone=UTC -Djavax.net.debug=handshake,data"
+
+ENTRYPOINT [ "sh", "-c", "exec java $JAVA_OPTS -Dspring.profiles.active=$SPRING_PROFILE -Djava.security.egd=file:/dev/./urandom -Dserver.port=$PORT -jar /app.jar" ]

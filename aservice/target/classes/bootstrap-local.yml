@@ -1,0 +1,33 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+    registry-fetch-interval-seconds: 10
+
+spring:
+  profiles: local
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://hbs-qa-core-common-cecapp.cbchewdnns8j.rds.cn-northwest-1.amazonaws.com.cn:5432/lotus
+    username: root
+    password: lQx8F3pNIQIHVJuvhw
+    hikari:
+      maximum-pool-size: 6
+      minimum-idle: 3
+
+#  redis:
+#    host: 3.70.20.61
+#    password: 123456
+#    port: 6379
+#    database: 0
+
+  redis:
+    host: qa-adapter.ay2w7f.0001.cnw1.cache.amazonaws.com.cn
+    password:
+    port: 6379
+    database: 1

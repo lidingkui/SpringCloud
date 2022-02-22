@@ -1,0 +1,131 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: eureka
+
+
+# ***************    LOCAL-DEV    ***************
+---
+spring:
+  profiles: local
+eureka:
+  client:
+    fetch-registry: false #服务发现，是否从Eureka中获取注册信息
+    register-with-eureka: false
+    serviceUrl: #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+      defaultZone: http://localhost:8070/eureka/
+  instance:
+    prefer-ip-address: true
+  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+    enable-self-preservation: false #是否开启自我保护模式
+    eviction-interval-timer-in-ms: 5000  #服务注册表清理间隔（单位毫秒，默认是60*1000）
+
+
+
+
+#
+## ***************    AWS-STAGE    ***************
+#---
+#spring:
+#  profiles: aws-stage
+#eureka:
+#  environment: aws-stage
+#  region: eu-central-1
+#  datacenter: cloud
+#  eu-central-1:
+#    availabilityZones: eu-central-1a, eu-central-1b
+#  client:
+#    region: eu-central-1
+#    availabilityZones:
+#      eu-central-1: eu-central-1a, eu-central-1b
+#    fetch-registry: false #服务发现，是否从Eureka中获取注册信息
+#    register-with-eureka: false
+#    useDnsForFetchingServiceUrls: false
+#    serviceUrl: #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+#      defaultZone: http://10.18.11.110:8070/eureka/
+#      eu-central-1b: http://ec2-18-193-13-250.eu-central-1.compute.amazonaws.com:8070/eureka/
+#  instance:
+#    prefer-ip-address: true
+#  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+#    enable-self-preservation: false #是否开启自我保护模式
+#    eviction-interval-timer-in-ms: 5000  #服务注册表清理间隔（单位毫秒，默认是60*1000）
+#    waitTimeInMsWhenSyncEmpty: 0
+#    a-w-s-access-id: ASIARPECBO3EMYCU7GFB
+#    a-w-s-secret-key: 1rzVETQfL1LmhcUIKQfrdDD1xZMHAQ+0XyVu2vby
+#    list-auto-scaling-groups-role-name: hbs-stage-core-elb-MicroserviceCluster-BFPZK5UOVXMW-ECSAutoScalingGroup-1CDKSR1D8KU9E
+#    batch-replication: true
+#
+#
+#
+## ***************    AWS-TEST    ***************
+#---
+#spring:
+#  profiles: aws-test
+#eureka:
+#  environment: aws-test
+#  region: eu-central-1
+#  datacenter: cloud
+#  eu-central-1:
+#    availabilityZones: eu-central-1a, eu-central-1b
+#  client:
+#    region: eu-central-1
+#    availabilityZones:
+#      eu-central-1: eu-central-1a, eu-central-1b
+#    fetch-registry: false #服务发现，是否从Eureka中获取注册信息
+#    register-with-eureka: false
+#    useDnsForFetchingServiceUrls: false
+#    serviceUrl: #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+#      defaultZone: http://10.19.9.240:8070/eureka/
+#      eu-central-1a: http://ec2-52-58-107-122.eu-central-1.compute.amazonaws.com:8070/eureka/
+#
+#  instance:
+#    prefer-ip-address: true
+#  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+#    enable-self-preservation: false #是否开启自我保护模式
+#    eviction-interval-timer-in-ms: 5000  #服务注册表清理间隔（单位毫秒，默认是60*1000）
+#    waitTimeInMsWhenSyncEmpty: 0
+#    a-w-s-access-id: ASIARPECBO3EAB3YCD7E
+#    a-w-s-secret-key: 2uDXOIl+6jqAqJRcBOLQo2QWOxukfHQIcbmvaHNy
+#    list-auto-scaling-groups-role-name: hbs-test-core-elb-MicroserviceCluster-1NW3OO5VA06O8-ECSAutoScalingGroup-19E2J2U05D06N
+#    batch-replication: true
+#
+#
+#
+#
+## ***************    AWS-PROD    ***************
+#---
+#spring:
+#  profiles: aws-prod
+#eureka:
+#  environment: aws-prod
+#  region: eu-central-1a
+#  datacenter: cloud
+#  eu-central-1:
+#    availabilityZones: eu-central-1a, eu-central-1b
+#  client:
+#    e-ipbind-rebind-retries: 0
+#    e-ipbinding-retry-interval-ms-when-unbound: 86400000
+#    region: eu-central-1a
+#    availabilityZones:
+#      eu-central-1: eu-central-1a, eu-central-1b
+#    fetch-registry: false #服务发现，是否从Eureka中获取注册信息
+#    register-with-eureka: false
+#    useDnsForFetchingServiceUrls: false
+#    serviceUrl: #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+#      defaultZone: http://10.17.9.19:8070/eureka/
+#      eu-central-1a: http://ec2-3-66-12-169.eu-central-1.compute.amazonaws.com:8070/eureka/
+#
+#  instance:
+#    prefer-ip-address: true
+#  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+#    e-ipbind-rebind-retries: 0
+#    e-ipbinding-retry-interval-ms-when-unbound: 86400000
+#    enable-self-preservation: false #是否开启自我保护模式
+#    eviction-interval-timer-in-ms: 5000  #服务注册表清理间隔（单位毫秒，默认是60*1000）
+#    waitTimeInMsWhenSyncEmpty: 0
+#    a-w-s-access-id: ASIARPECBO3EHOH2FNSK
+#    a-w-s-secret-key: sI8ekte/N02AZIjcR6txtlCNn2UZCt4kFnoEtMhz
+#    list-auto-scaling-groups-role-name: hbs-prod-core-elb-MicroserviceCluster-S407TOA6XP3B-ECSAutoScalingGroup-41FWS21RHRRM
+#    batch-replication: true

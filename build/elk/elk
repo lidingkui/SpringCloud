@@ -1,0 +1,29 @@
+sudo docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it -d -e ES_JAVA_OPTS="-Xms512m -Xmx512m" -e ES_HEAP_SIZE="256m" -v $(pwd)/elk-data:/var/lib/elasticsearch --name elk 1f102
+
+
+
+
+sudo docker exec -it elk /bin/bash 进入容器
+
+cd etc/logstash/conf.d/
+
+vim 02-beats-input.conf 修改input配置
+
+input {
+    tcp {
+        port => 5044
+        codec => json_lines
+
+    }
+
+}
+output{
+    elasticsearch {
+    hosts => ["localhost:9200"]
+
+    }
+
+}
+
+https://elk-docker.readthedocs.io/#setting-up-an-elasticsearch-cluster
+https://blog.csdn.net/d597180714/article/details/82382703

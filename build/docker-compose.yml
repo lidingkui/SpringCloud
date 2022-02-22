@@ -1,0 +1,39 @@
+version: '3'
+services:
+  eureka:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/eureka:local-dev
+    ports:
+      - 8070:8070
+    restart: always
+
+
+  gateway:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/gateway:local-dev
+    ports:
+      - 80:80
+    restart: always
+
+  converter:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/converter:local-dev
+    ports:
+      - 8074:8074
+    restart: always
+
+  ocpi:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/ocpi:local-dev
+    ports:
+      - 8072:8072
+    restart: always
+
+  oicp:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/oicp:local-dev
+    ports:
+      - 8073:8073
+    restart: always
+
+  sleuth:
+    image: registry.cn-qingdao.aliyuncs.com/ocpi-adapter/sleuth:local-dev
+    ports:
+      - 8075:8075
+    restart: always
+

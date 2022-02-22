@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <contextName>bffserver</contextName>
+
+    <property name="pattern-color"
+              value="%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %green(%logger{50}) - %highlight(%msg) %n"/>
+
+    <property name="appname"
+              value="bffserver"/>
+
+    <!-- 输出到控制台 -->
+    <appender name="CONSOLE-WITH-COLOR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern-color}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 为logstash输出的JSON格式的Appender -->
+    <appender name="logstash-bff-qa"
+              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>3.70.20.61:5044</destination>
+        <!-- 日志输出编码 -->
+        <encoder
+                class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "traceId": "%X{gateway-X-traceId}",
+                        "spanId": "%X{spanId}",
+                        "severity": "%level",
+                        "service": "${springAppName:-}",
+                        "trace": "%X{X-B3-TraceId:-}",
+                        "span": "%X{X-B3-SpanId:-}",
+                        "exportable": "%X{X-Span-Export:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "rest": "%message",
+                        "createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+
+
+    <springProfile name="qa">
+        <root level="INFO">
+            <appender-ref ref="logstash-bff-qa"/>
+        </root>
+    </springProfile>
+
+
+    <springProfile name="local">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE-WITH-COLOR"/>
+            <!--<appender-ref ref="logstash-bff-qa"/>-->
+        </root>
+    </springProfile>
+
+</configuration>
